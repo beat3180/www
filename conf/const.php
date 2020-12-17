@@ -63,3 +63,33 @@ define('USER_PASSWORD_LENGTH_MAX', 100);
 define('USER_TYPE_ADMIN', 1);
 //DBusersテーブル、typeカラム2
 define('USER_TYPE_NORMAL', 2);
+
+//タイトルの長さが一文字以上
+define('TITLE_NAME_LENGTH_MIN', 1);
+//タイトルの長さが100文字以下
+define('TITLE_NAME_LENGTH_MAX', 100);
+//カテゴリーの長さが一文字以上
+define('CATEGORY_NAME_LENGTH_MIN', 1);
+//カテゴリーの長さが100文字以下
+define('CATEGOR_NAME_LENGTH_MAX', 100);
+//コンテンツの長さが10文字以上
+define('CONTENTS_LENGTH_MIN', 10);
+//コンテンツの長さが1500文字以下
+define('CONTENTS_LENGTH_MAX', 1500);
+
+//DBcontentsテーブル、statusカラム1
+define('CONTENTS_STATUS_OPEN', 1);
+//DBcontentsテーブル、statusカラム0
+define('CONTENTS_STATUS_CLOSE', 0);
+
+//コンテンツステータスを設定する定数、連想配列でキーがopenの場合1の値が入り、キーがcloseの場合0の値が入る
+define('PERMITTED_CONTENTS_STATUSES', array(
+  'open' => 1,
+  'close' => 0,
+));
+
+//画像ファイルの拡張子を確認する
+define('PERMITTED_IMAGE_TYPES', array(
+  IMAGETYPE_JPEG => 'jpg',
+  IMAGETYPE_PNG => 'png',
+));
