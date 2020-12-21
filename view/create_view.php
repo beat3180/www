@@ -31,7 +31,7 @@
 
 <!--$categorysに一つ以上値が入っていた場合は表示される-->
     <?php if(count($categorys) > 0){ ?>
-      <table class="table table-bordered text-center">
+      <table class="table table-bordered text-center p-md-3 m-md-3">
         <thead class="thead-light">
           <tr>
             <th>カテゴリー</th>

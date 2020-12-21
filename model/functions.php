@@ -45,7 +45,7 @@ function get_file($name){
   if(isset($_FILES[$name]) === true){
     //ファイルの名前を返す
     return $_FILES[$name];
-  };
+  }
   //$_FILESを連想配列にして返す
   return array();
 }
@@ -206,10 +206,10 @@ function is_valid_format($string, $format){
 
 
 function is_valid_upload_image($image){
-  //POSTでアップロードされたファイルか調べる関数、一時フォルダに保存されたファイルがなにか間違っていた場合
-  if(is_uploaded_file($image['tmp_name']) === false){
-    //$_SESSION['__errors'][]にファイル形式が不正です。というエラーメッセージを格納する
-    set_error('ファイル形式が不正です。');
+    //POSTでアップロードされたファイルか調べる関数、一時フォルダに保存されたファイルがなにか間違っていた場合
+    if(is_uploaded_file($image['tmp_name']) === false){
+      //$_SESSION['__errors'][]にファイル形式が不正です。というエラーメッセージを格納する
+      set_error('ファイル形式が不正です。');
     //falseを返す
     return false;
   }
