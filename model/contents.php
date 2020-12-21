@@ -74,28 +74,33 @@ function get_open_items($db){
 }
 
 //画像ファイルの処理やエラー処理を通し、最終的に商品を登録する
-function regist_contents($db, $title, $category, $status, $contents, $image){
-  //画像ファイルがアップロードされた時の関数の処理
-  $filename = get_upload_filename($image);
+function regist_contents($db, $title, $category_id, $status, $contents,$user_id, $image){
+  var_dump($image);
+  if(!empty($image)){
+    //画像ファイルがアップロードされた時の関数の処理
+    $filename = get_upload_filename($image);
+  }
   //エラー関数処理の結果falseが返ってきた場合
-  if(validate_contents($title, $category, $status, $contents) === false){
+  if(validate_contents($title, $status, $contents) === false){
     return false;
   }
   //トランザクションを絡めて商品を登録する関数を返す
-  return regist_contents_transaction($db, $title, $category, $status, $contents, $image, $filename);
+  return regist_contents_transaction($db, $title, $category_id, $status, $contents, $user_id, $image, $filename=[]);
 }
 
 //トランザクションを絡めて商品を登録する関数
-function regist_contents_transaction($db, $title, $category, $status, $contents, $image, $filename){
+function regist_contents_transaction($db, $title, $category_id, $status, $contents, $user_id, $image, $filename){
   //トランザクションを開始
   $db->beginTransaction();
   //アイテムをインサートする際の処理関数かつ、アップロードした画像ファイルをimagesフォルダに移動させる関数
-  if(insert_contents($db, $title, $category, $status, $contents)
-    && save_image($image, $filename)){
+  if(insert_contents($db, $user_id,$category_id,$title,$contents,$filename,$status)){
+    if(!empty($image) || (!empty($filename))){
+        save_image($image, $filename);
+      }
       //結果をコミットする
-    $db->commit();
-    //trueを返す
-    return true;
+      $db->commit();
+      //trueを返す
+      return true;
   }
   //失敗した場合ロールバックする
   $db->rollback();
@@ -104,25 +109,25 @@ function regist_contents_transaction($db, $title, $category, $status, $contents,
 
 }
 
-//商品をitemsテーブルにインサートする際の処理関数
-function insert_conntents($db, $title, $category, $status, $contents){
+//商品をcontentsテーブルにインサートする際の処理関数
+function insert_contents($db, $user_id,$category_id,$title,$contents,$filename,$status){
   //定数のキーと受け取ったステータスの値が一致した情報を変数で出力
   $status_value = PERMITTED_CONTENTS_STATUSES[$status];
   //SQL文の処理
   $sql = "
     INSERT INTO
-      conntents(
+      contents(
+        user_id,
+        category_id,
         title,
-        category,
-        status,
         contents,
-        image
+        image,
+        status
       )
     VALUES(?,?,?,?,?,?);
   ";
-
   //実行した結果を返す
-  return execute_query($db, $sql,[$title,$category,$status_value,$contents,$filename]);
+  return execute_query($db, $sql,[$user_id,$category_id,$title,$contents,$filename,$status_value]);
 }
 
 //DBitemsテーブル、item_idで抽出した該当のstatusをアップデートし、情報を返す
@@ -202,16 +207,14 @@ function is_open($item){
 }
 
 //エラー処理をまとめた関数
-function validate_contents($title, $category, $status, $contents){
+function validate_contents($title, $status, $contents){
   //それぞれの関数処理の結果を変数で出力する
   $is_valid_contents_title = is_valid_contents_title($title);
-  $is_valid_contents_category = is_valid_contents_category($category);
   $is_valid_contents_status = is_valid_contents_status($status);
   $is_valid_contents = is_valid_contents($contents);
 
   //変数の結果を返す
   return $is_valid_contents_title
-    && $is_valid_contents_category
     && $is_valid_contents_status
     && $is_valid_contents;
 }
@@ -223,19 +226,6 @@ function is_valid_contents_title($title){
   if(is_valid_length($title, TITLE_NAME_LENGTH_MIN, TITLE_NAME_LENGTH_MAX) === false){
     //$_SESSION['__errors'][]に'タイトルは'. TITLE_NAME_LENGTH_MIN . '文字以上、' . TITLE_NAME_LENGTH_MAX . '文字以内にしてください。'というメッセージを格納する
     set_error('タイトルは'. TITLE_NAME_LENGTH_MIN . '文字以上、' . TITLE_NAME_LENGTH_MAX . '文字以内にしてください。');
-    $is_valid = false;
-  }
-  //trueかfalse、if文で分岐させたいずれかの値を返す
-  return $is_valid;
-}
-
-//値段関連のエラー処理
-function is_valid_contents_category($category){
-  $is_valid = true;
-  //定数の設定より、タイトルの文字数が1文字以上100文字以下に設定され、それが異なる場合
-  if(is_valid_length($category, CATEGORY_NAME_LENGTH_MIN, CATEGORY_NAME_LENGTH_MAX) === false){
-    //$_SESSION['__errors'][]に'カテゴリーは'. TITLE_NAME_LENGTH_MIN . '文字以上、' . TITLE_NAME_LENGTH_MAX . '文字以内にしてください。'というメッセージを格納する
-    set_error('カテゴリーは'. CATEGORY_NAME_LENGTH_MIN . '文字以上、' . CATEGORY_NAME_LENGTH_MAX . '文字以内にしてください。');
     $is_valid = false;
   }
   //trueかfalse、if文で分岐させたいずれかの値を返す
@@ -268,7 +258,7 @@ function is_valid_contents_filename($filename){
 function is_valid_contents($contents){
   $is_valid = true;
   //定数の設定より、コンテンツの文字数が10文字以上1500文字以下に設定され、それが異なる場合
-  if(is_valid_length($contents, CONTENTS_LENGTH_MIN, CONTENTS_NAME_LENGTH_MAX) === false){
+  if(is_valid_length($contents, CONTENTS_LENGTH_MIN, CONTENTS_LENGTH_MAX) === false){
     //$_SESSION['__errors'][]に'コンテンツは'. TITLE_NAME_LENGTH_MIN . '文字以上、' . TITLE_NAME_LENGTH_MAX . '文字以内にしてください。'というメッセージを格納する
     set_error('コンテンツは'. CONTENTS_LENGTH_MIN . '文字以上、' . CONTENTS_LENGTH_MAX . '文字以内にしてください。');
     $is_valid = false;

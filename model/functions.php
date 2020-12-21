@@ -223,8 +223,8 @@ function is_valid_upload_image($image){
     //falseを返す
     return false;
   }
-  //問題ない場合trueを返す
-  return true;
+//問題ない場合trueを返す
+return true;
 }
 
 

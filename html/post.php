@@ -7,6 +7,8 @@ require_once MODEL_PATH . 'functions.php';
 require_once MODEL_PATH . 'user.php';
 ///var/www/html/../model/contents.phpというドキュメントルートを通りcontentsデータに関する関数ファイルを読み込み
 require_once MODEL_PATH . 'contents.php';
+///var/www/html/../model/category.phpというドキュメントルートを通りcategoryデータに関する関数ファイルを読み込み
+require_once MODEL_PATH . 'category.php';
 
 //セッションの開始、作成
 session_start();
@@ -25,6 +27,8 @@ $db = get_db_connect();
 
 //$_SESSION['user_id']でDBusersテーブルから該当するuser_idを抽出し、情報を返す
 $user = get_login_user($db);
+
+$categorys = get_categorys($db);
 
 //定数、/var/www/html/../view/post_view.phpというドキュメントルートを通り、index_viewデータを読み取る
 include_once VIEW_PATH . 'post_view.php';

@@ -41,6 +41,10 @@ define('CART_URL', '/cart.php');
 define('FINISH_URL', '/finish.php');
 //history.phpのドキュメントルート
 define('HISTORY_URL', '/history.php');
+//post.phpのドキュメントルート
+define('POST_URL', '/post.php');
+//create.phpのドキュメントルート
+define('CREATE_URL', '/create.php');
 //admin.phpのドキュメントルート
 define('ADMIN_URL', '/admin.php');
 
@@ -71,7 +75,7 @@ define('TITLE_NAME_LENGTH_MAX', 100);
 //カテゴリーの長さが一文字以上
 define('CATEGORY_NAME_LENGTH_MIN', 1);
 //カテゴリーの長さが100文字以下
-define('CATEGOR_NAME_LENGTH_MAX', 100);
+define('CATEGORY_NAME_LENGTH_MAX', 100);
 //コンテンツの長さが10文字以上
 define('CONTENTS_LENGTH_MIN', 10);
 //コンテンツの長さが1500文字以下

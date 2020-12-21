@@ -10,6 +10,8 @@
 <?php include VIEW_PATH . 'templates/header_guest.php'; ?>
 
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-5">
+<!--//定数、/var/www/html/../view/templates/messages.phpというドキュメントルートを通り、messages.phpデータを読み取る-->
+  <?php include VIEW_PATH . 'templates/messages.php'; ?>
   <div class="container">
     <div class="panel panel-default">
       <h2 class="panel-heading">記事投稿</h2>
@@ -21,12 +23,10 @@
           </div>
           <div class="form-group">
             <label class="control-label">カテゴリー</label>
-            <select name="category" class="form-control">
-              <option>選択肢1</option>
-              <option>選択肢2</option>
-              <option>選択肢3</option>
-              <option>選択肢4</option>
-              <option>選択肢5</option>
+            <select name="category_id" class="form-control">
+              <?php foreach($categorys as $category){ ?>
+              <option value="<?php print($category['category_id']); ?>"><?php print ($category['category']); ?></option>
+              <?php } ?>
             </select>
           </div>
           <div class="form-group">

@@ -29,13 +29,12 @@ if(is_valid_csrf_token($token) === false){
 //DB接続
 $db = get_db_connect();
 
-//$_SESSION['user_id']を取得する
+//$_SESSION['user_id']でDBusersテーブルから該当するuser_idを抽出し、情報を返す
 $user = get_login_user($db);
-
 //post_view.phpからPOSTで飛んできた特定のtitleの情報を変数で出力
 $title = get_post('title');
 //post_view.phpからPOSTで飛んできた特定のcategoryの情報を変数で出力
-$category = get_post('category');
+$category_id = get_post('category_id');
 //post_view.phpからPOSTで飛んできた特定のstatusの情報を変数で出力
 $status = get_post('status');
 //post_view.phpからPOSTで飛んできた特定のcontentsの情報を変数で出力
@@ -45,14 +44,14 @@ $contents = get_post('contents');
 $image = get_file('image');
 
 //出力された変数を引数として用い、さまざまな処理を通して商品を登録する
-if(regist_contents($db, $title, $category, $status, $contents, $image='';)){
+if(regist_contents($db, $title, $category_id, $status, $contents,$user['user_id'], $image=[])){
    //$_SESSION['__messages'][]に商品を登録しました。というメッセージを格納する
-  set_message('商品を登録しました。');
+  set_message('記事を投稿しました。');
   //何らかの処理が失敗した場合
 }else {
   //$_SESSION['__errors'][]に商品の登録に失敗しました。というメッセージを格納する
-  set_error('商品の登録に失敗しました。');
+  set_error('記事の投稿に失敗しました。');
 }
 
 //このページが表示されないよう、admin.phpにリダイレクトする
-redirect_to(ADMIN_URL);
+redirect_to(POST_URL);
