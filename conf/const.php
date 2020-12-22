@@ -45,6 +45,8 @@ define('HISTORY_URL', '/history.php');
 define('POST_URL', '/post.php');
 //create.phpのドキュメントルート
 define('CREATE_URL', '/create.php');
+//create.phpのドキュメントルート
+define('CONTENTS_DETAIL_URL', '/contents_detail.php');
 //admin.phpのドキュメントルート
 define('ADMIN_URL', '/admin.php');
 

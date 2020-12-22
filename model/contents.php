@@ -4,45 +4,9 @@ require_once MODEL_PATH . 'db.php';
 
 // DB利用
 
-//DBitemsテーブルからitem_idで該当する情報を抽出し、返す
-function get_item($db, $item_id){
+//DBcontentsテーブルからcontents_idで該当する情報を抽出し、返す
+function get_content($db, $contents_id){
   $sql = "
-    SELECT
-      item_id,
-      name,
-      stock,
-      price,
-      image,
-      status
-    FROM
-      contents
-    WHERE
-      item_id = ?
-  ";
-//キーをカラム毎に、値をそれぞれのカラムに充てた配列で取得する。
-  return fetch_query($db, $sql,[$item_id]);
-}
-
-//DBitemsテーブルにある情報を全て開示する
-function get_admin_items($db){
-  $sql = '
-    SELECT
-      item_id,
-      name,
-      stock,
-      price,
-      image,
-      status
-    FROM
-      items
-  ';
-  //キーを連番に、値をカラム毎の配列で取得する。
-  return fetch_all_query($db, $sql);
-}
-
-//indexページに必要なページを情報を全て開示する
-function get_index_contents($db){
-  $sql = '
     SELECT
       contents.contents_id,
       contents.title,
@@ -66,28 +30,64 @@ function get_index_contents($db){
     ON
       contents.user_id = users.user_id
     WHERE
-      status = 1
+      contents_id = ?
+  ";
+//キーをカラム毎に、値をそれぞれのカラムに充てた配列で取得する。
+  return fetch_query($db, $sql,[$contents_id]);
+}
+
+
+//contentsの情報を全て開示する
+function get_contents($db){
+  $sql = '
+    SELECT
+      contents.contents_id,
+      contents.title,
+      contents.contents,
+      contents.user_id,
+      contents.image,
+      contents.status,
+      contents.category_id,
+      contents.created_datetime,
+      categorys.category,
+      users.name,
+      users.type
+    FROM
+      contents
+    JOIN
+      categorys
+    ON
+      contents.category_id = categorys.category_id
+    JOIN
+     users
+    ON
+      contents.user_id = users.user_id
   ';
+  //trueの引数が入っていた場合、ステータス1のみ開示する
+  if($is_open === true){
+    $sql .= '
+      WHERE status = 1
+  ';
+  }
   //キーを連番に、値をカラム毎の配列で取得する。
   return fetch_all_query($db, $sql);
 }
 
 
-
 //DBitemsテーブルのステータスに関わらず全ての情報を開示する
-function get_all_items($db){
-  return get_items($db);
+function get_all_contents($db){
+  return get_contents($db);
 }
 
 //DBitemsテーブルのステータス1=openのみの情報を開示する
-function get_open_items($db){
-  return get_items($db,true,$start);
+function get_open_contents($db){
+  return get_contents($db,true,$start);
 }
 
 //画像ファイルの処理やエラー処理を通し、最終的に商品を登録する
-function regist_contents($db, $title, $category_id, $status, $contents,$user_id, $image=''){
+function regist_contents($db, $title, $category_id, $status, $contents,$user_id, $image=null){
 
-  if(!empty($image)){
+  if($image !== null){
     //画像ファイルがアップロードされた時の関数の処理
     $filename = get_upload_filename($image);
   }
@@ -105,13 +105,13 @@ function regist_contents_transaction($db, $title, $category_id, $status, $conten
   $db->beginTransaction();
   //アイテムをインサートする際の処理関数かつ、アップロードした画像ファイルをimagesフォルダに移動させる関数
   if(insert_contents($db, $user_id,$category_id,$title,$contents,$filename,$status)){
-    if(!empty($image) || (!empty($filename))){
-        save_image($image, $filename);
-      }
-      //結果をコミットする
-      $db->commit();
-      //trueを返す
-      return true;
+    if($image !== null){
+      save_image($image, $filename);
+    }
+    //結果をコミットする
+    $db->commit();
+    //trueを返す
+    return true;
   }
   //失敗した場合ロールバックする
   $db->rollback();
@@ -213,8 +213,8 @@ function delete_item($db, $item_id){
 // 非DB
 
 //商品のステータスが1=openであるものを返す
-function is_open($item){
-  return $item['status'] === 1;
+function is_open($contents){
+  return $contents['status'] === 1;
 }
 
 //エラー処理をまとめた関数
@@ -243,7 +243,7 @@ function is_valid_contents_title($title){
   return $is_valid;
 }
 
-//在庫関連のエラー処理
+//ステータスのエラー処理
 function is_valid_contents_status($status){
   $is_valid = true;
   //ステータスの値と定数が一致しない場合
@@ -265,7 +265,7 @@ function is_valid_contents_filename($filename){
   return $is_valid;
 }
 
-//ステータスのバリデーション処理
+//記事のバリデーション処理
 function is_valid_contents($contents){
   $is_valid = true;
   //定数の設定より、コンテンツの文字数が10文字以上1500文字以下に設定され、それが異なる場合

@@ -25,7 +25,7 @@ $user = get_login_user($db);
 
 
 //DBcontentsテーブルの全ての情報を取得し、変数で出力する
-$contents = get_index_contents($db);
+$contents = get_open_contents($db);
 
 
 

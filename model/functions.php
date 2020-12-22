@@ -42,12 +42,10 @@ function get_post($name){
 //グローバル変数FILESで受け取ったファイルを連粗配列にして返す関数
 function get_file($name){
   //グローバル変数FILESで受け取ったファイルが入っているか確認する
-  if(isset($_FILES[$name]) === true){
+  if(isset($_FILES[$name]) === true && $_FILES[$name]['name'] !== ''){
     //ファイルの名前を返す
     return $_FILES[$name];
   }
-  //$_FILESを連想配列にして返す
-  return array();
 }
 
 //セッションが存在しているか確認。あればセッションを返し、なければNULLを返す
