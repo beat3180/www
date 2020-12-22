@@ -44,7 +44,7 @@ $contents = get_post('contents');
 $image = get_file('image');
 
 //出力された変数を引数として用い、さまざまな処理を通して商品を登録する
-if(regist_contents($db, $title, $category_id, $status, $contents,$user['user_id'], $image=[])){
+if(regist_contents($db, $title, $category_id, $status, $contents,$user['user_id'], $image)){
    //$_SESSION['__messages'][]に商品を登録しました。というメッセージを格納する
   set_message('記事を投稿しました。');
   //何らかの処理が失敗した場合

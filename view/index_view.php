@@ -11,188 +11,45 @@
 <!--//定数、/var/www/html/../view/templates/header_guest.phpというドキュメントルートを通り、header_guest.phpデータを読み取る-->
 <?php include VIEW_PATH . 'templates/header_guest.php'; ?>
 
-
-
-<div class="album py-5 bg-light">
+<!--//定数、/var/www/html/../view/templates/messages.phpというドキュメントルートを通り、messages.phpデータを読み取る-->
+<?php include VIEW_PATH . 'templates/messages.php'; ?>
+  <!--$categorysに一つ以上値が入っていた場合は表示される-->
+  <?php if(count($contents) > 0){ ?>
+  <div class="album py-5 bg-light">
     <div class="container">
-
       <div class="row">
+      <?php foreach($contents as $content){ ?>
         <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-body">
-              <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-              <p class="card-text">これは写真の解説文付きのカードです。自然に説明を加えることができます。しかしこの文章は少し長いかもしれません。</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
+            <a href="contents_detail.php?contents_id=<?php print($content['contents_id']); ?>">
+              <?php if($content['image'] !== null){ ?>
+              <img class="card-img-top" src="<?php print(IMAGE_PATH . $content['image']); ?>" alt="Card image cap">
+              <?php } else { ?>
+              <img class="card-img-top" src="/assets/images/漫画デフォルト.png" alt="Card image">
+              <?php } ?>
+              <div class="card-body">
+                <h4 class="card-text border-bottom"><?php print h($content['title']); ?></h4>
+                <div class="align-items-center">
+                    <p>カテゴリー:<?php print h($content['category']); ?></p>
+                    <p>ユーザー名:<?php print h($content['name']); ?></p>
                 </div>
-                <!-- <small class="text-muted">9 mins</small> -->
-                <small class="text-muted">9分</small>
+                <div><small class="text-muted"><?php print h($content['created_datetime']); ?></small></div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-body">
-              <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-              <p class="card-text">これは写真の解説文付きのカードです。自然に説明を加えることができます。しかしこの文章は少し長いかもしれません。</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
-                </div>
-                <!-- <small class="text-muted">9 mins</small> -->
-                <small class="text-muted">9分</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-body">
-              <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-              <p class="card-text">これは写真の解説文付きのカードです。自然に説明を加えることができます。しかしこの文章は少し長いかもしれません。</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
-                </div>
-                <!-- <small class="text-muted">9 mins</small> -->
-                <small class="text-muted">9分</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-body">
-              <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-              <p class="card-text">これは写真の解説文付きのカードです。自然に説明を加えることができます。しかしこの文章は少し長いかもしれません。</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
-                </div>
-                <!-- <small class="text-muted">9 mins</small> -->
-                <small class="text-muted">9分</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-body">
-              <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-              <p class="card-text">これは写真の解説文付きのカードです。自然に説明を加えることができます。しかしこの文章は少し長いかもしれません。</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
-                </div>
-                <!-- <small class="text-muted">9 mins</small> -->
-                <small class="text-muted">9分</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-body">
-              <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-              <p class="card-text">これは写真の解説文付きのカードです。自然に説明を加えることができます。しかしこの文章は少し長いかもしれません。</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
-                </div>
-                <!-- <small class="text-muted">9 mins</small> -->
-                <small class="text-muted">9分</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-body">
-              <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-              <p class="card-text">これは写真の解説文付きのカードです。自然に説明を加えることができます。しかしこの文章は少し長いかもしれません。</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
-                </div>
-                <!-- <small class="text-muted">9 mins</small> -->
-                <small class="text-muted">9分</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-body">
-              <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-              <p class="card-text">これは写真の解説文付きのカードです。自然に説明を加えることができます。しかしこの文章は少し長いかもしれません。</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
-                </div>
-                <!-- <small class="text-muted">9 mins</small> -->
-                <small class="text-muted">9分</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-body">
-              <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-              <p class="card-text">これは写真の解説文付きのカードです。自然に説明を加えることができます。しかしこの文章は少し長いかもしれません。</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">見る</button>
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  <button type="button" class="btn btn-sm btn-outline-secondary">編集</button>
-                </div>
-                <!-- <small class="text-muted">9 mins</small> -->
-                <small class="text-muted">9分</small>
-              </div>
-            </div>
-          </div>
-        </div>
+      <?php } ?>
       </div>
+
     </div>
   </div>
+  <!--$categoryに何も値が入っていない場合-->
+  <?php } else { ?>
+    <p>カテゴリーはありません。</p>
+  <?php } ?>
+
+
+
 
   </body>
 </html>

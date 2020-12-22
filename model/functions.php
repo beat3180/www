@@ -42,12 +42,10 @@ function get_post($name){
 //グローバル変数FILESで受け取ったファイルを連粗配列にして返す関数
 function get_file($name){
   //グローバル変数FILESで受け取ったファイルが入っているか確認する
-  if(isset($_FILES[$name]) === true){
+  if(isset($_FILES[$name]) === true && $_FILES[$name]['name'] !== ''){
     //ファイルの名前を返す
     return $_FILES[$name];
-  };
-  //$_FILESを連想配列にして返す
-  return array();
+  }
 }
 
 //セッションが存在しているか確認。あればセッションを返し、なければNULLを返す
@@ -206,10 +204,10 @@ function is_valid_format($string, $format){
 
 
 function is_valid_upload_image($image){
-  //POSTでアップロードされたファイルか調べる関数、一時フォルダに保存されたファイルがなにか間違っていた場合
-  if(is_uploaded_file($image['tmp_name']) === false){
-    //$_SESSION['__errors'][]にファイル形式が不正です。というエラーメッセージを格納する
-    set_error('ファイル形式が不正です。');
+    //POSTでアップロードされたファイルか調べる関数、一時フォルダに保存されたファイルがなにか間違っていた場合
+    if(is_uploaded_file($image['tmp_name']) === false){
+      //$_SESSION['__errors'][]にファイル形式が不正です。というエラーメッセージを格納する
+      set_error('ファイル形式が不正です。');
     //falseを返す
     return false;
   }

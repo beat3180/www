@@ -15,7 +15,7 @@
     <h1>カテゴリー・タグ追加</h1>
 
 <!--//定数、/var/www/html/../view/templates/messages.phpというドキュメントルートを通り、messages.phpデータを読み取る-->
-    <?php include VIEW_PATH . 'templates/messages.php'; ?>
+<?php include VIEW_PATH . 'templates/messages.php'; ?>
 
  <!--form内の情報をacreate_category_insert.phpへ飛ばす-->
     <form method="post" action="create_category_insert.php" class="add_item_form col-md-6">
@@ -31,7 +31,7 @@
 
 <!--$categorysに一つ以上値が入っていた場合は表示される-->
     <?php if(count($categorys) > 0){ ?>
-      <table class="table table-bordered text-center">
+      <table class="table table-bordered text-center p-md-3 m-md-3">
         <thead class="thead-light">
           <tr>
             <th>カテゴリー</th>

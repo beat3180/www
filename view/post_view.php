@@ -34,7 +34,7 @@
             <textarea name="contents" rows="20" id="textarea1" class="form-control"></textarea>
           </div>
           <div class="form-group">
-            <label class="control-label">サムネイル</label>
+            <label class="control-label">記事画像</label>
             <input type="file" name="image" id="image">
           </div>
           <div class="form-group">
