@@ -102,6 +102,10 @@ function is_admin($user){
   return $user['type'] === USER_TYPE_ADMIN;
 }
 
+function is_person_user($user,$contents){
+  return $user['user_id'] === $contents;
+}
+
 //ユーザー名とパスワードのエラー処理を行い、結果を返す
 function is_valid_user($db,$name, $email, $password, $password_confirmation){
   // 短絡評価を避けるため一旦代入。

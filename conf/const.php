@@ -46,7 +46,9 @@ define('POST_URL', '/post.php');
 //create.phpのドキュメントルート
 define('CREATE_URL', '/create.php');
 //create.phpのドキュメントルート
-define('CONTENTS_DETAIL_URL', '/contents_detail.php');
+define('CONTENTS_DETAIL_URL', '/contents_detail.php?contents_id=' . print($contents_id) );
+//user_contents.phpのドキュメントルート
+define('USER_CONTENTS_URL', '/user_contents.php');
 //admin.phpのドキュメントルート
 define('ADMIN_URL', '/admin.php');
 

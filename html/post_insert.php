@@ -53,5 +53,5 @@ if(regist_contents($db, $title, $category_id, $status, $contents,$user['user_id'
   set_error('記事の投稿に失敗しました。');
 }
 
-//このページが表示されないよう、admin.phpにリダイレクトする
-redirect_to(POST_URL);
+//このページが表示されないよう、index.phpにリダイレクトする
+redirect_to(HOME_URL);

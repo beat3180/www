@@ -44,7 +44,7 @@
               <option value="close">非公開</option>
             </select>
           </div>
-          <button class="btn btn-default">送信</button>
+          <button class="btn btn-lg btn-primary">記事投稿</button>
           <!--CSRF対策のセッションに登録されたトークンを送信する-->
           <input type="hidden" name="csrf" value="<?php print($token); ?>">
         </form>

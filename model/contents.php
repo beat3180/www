@@ -37,8 +37,42 @@ function get_content($db, $contents_id){
 }
 
 
+//DBcontentsテーブルからcontents_idで該当する情報を抽出し、返す
+function get_user_contents($db, $user_id){
+  $sql = "
+    SELECT
+      contents.contents_id,
+      contents.title,
+      contents.contents,
+      contents.user_id,
+      contents.image,
+      contents.status,
+      contents.category_id,
+      contents.created_datetime,
+      categorys.category,
+      users.name,
+      users.type
+    FROM
+      contents
+    JOIN
+      categorys
+    ON
+      contents.category_id = categorys.category_id
+    JOIN
+     users
+    ON
+      contents.user_id = users.user_id
+    WHERE
+      users.user_id = ?
+  ";
+//キーを連番に、値をカラム毎の配列で取得する。
+  return fetch_all_query($db, $sql,[$user_id]);
+}
+
+
+
 //contentsの情報を全て開示する
-function get_contents($db){
+function get_contents($db,$is_open = false){
   $sql = '
     SELECT
       contents.contents_id,
@@ -81,7 +115,7 @@ function get_all_contents($db){
 
 //DBitemsテーブルのステータス1=openのみの情報を開示する
 function get_open_contents($db){
-  return get_contents($db,true,$start);
+  return get_contents($db,true);
 }
 
 //画像ファイルの処理やエラー処理を通し、最終的に商品を登録する
@@ -142,19 +176,19 @@ function insert_contents($db, $user_id,$category_id,$title,$contents,$filename,$
 }
 
 //DBitemsテーブル、item_idで抽出した該当のstatusをアップデートし、情報を返す
-function update_item_status($db, $item_id, $status){
+function update_contents_status($db, $contents_id, $status){
   $sql = "
     UPDATE
-      items
+      contents
     SET
       status = ?
     WHERE
-      item_id = ?
+      contents_id = ?
     LIMIT 1
   ";
 
   //実行した結果を返す
-  return execute_query($db, $sql,[$status,$item_id]);
+  return execute_query($db, $sql,[$status,$contents_id]);
 }
 
 //DBitemsテーブル、item_idで抽出した該当のstockをアップデートし、情報を返す
@@ -172,19 +206,21 @@ function update_item_stock($db, $item_id, $stock){
   return execute_query($db, $sql,[$stock,$item_id]);
 }
 
-//DBitemsテーブル、item_idで抽出した該当のカラムを抽出し、デリートする
-function destroy_item($db, $item_id){
-//特定のitem_idでDBから情報を抽出する
-  $item = get_item($db, $item_id);
-  //item情報を抽出できなかった場合、falseを返す
-  if($item === false){
+//DBcontentsテーブル、contents_idで抽出した該当のカラムを抽出し、デリートする
+function destroy_contents($db, $contents_id){
+//特定のcontents_idでDBから情報を抽出する
+  $contents = get_content($db, $contents_id);
+  //contents情報を抽出できなかった場合、falseを返す
+  if($contents === false){
     return false;
   }
   //トランザクションを開始する
   $db->beginTransaction();
-//抽出したimte_idによってitemを削除し、画像も削除する
-  if(delete_item($db, $item['item_id'])
-    && delete_image($item['image'])){
+//抽出したcontents_idによってcontentsを削除し、画像も削除する
+  if(delete_contents($db, $contents['contents_id'])){
+    if($content['image'] !== null){
+      delete_image($contents['image']);
+    }
       //結果をコミットする
     $db->commit();
     //trueを返す
@@ -196,17 +232,17 @@ function destroy_item($db, $item_id){
 }
 
 //DBitemsテーブルから特定のitem_idで抽出したカラムをデリートするSQL文
-function delete_item($db, $item_id){
+function delete_contents($db, $contents_id){
   $sql = "
     DELETE FROM
-      items
+      contents
     WHERE
-      item_id = ?
+      contents_id = ?
     LIMIT 1
   ";
 
   //実行した結果を返す
-  return execute_query($db, $sql,[$item_id]);
+  return execute_query($db, $sql,[$contents_id]);
 }
 
 

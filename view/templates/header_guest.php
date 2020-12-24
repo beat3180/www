@@ -11,6 +11,9 @@
           <a class="nav-link" href="<?php print(CREATE_URL);?>">管理</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="<?php print(USER_CONTENTS_URL);?>">MY記事</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="<?php print(POST_URL);?>">記事投稿</a>
         </li>
         <li class="nav-item">
