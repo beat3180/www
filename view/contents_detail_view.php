@@ -19,8 +19,8 @@ img{
 </style>
 <div class="<?php print (is_open($contents) ? '' : 'close_contents'); ?>">
   <body  class="bg-light" >
-  <!--//定数、/var/www/html/../view/templates/header_guest.phpというドキュメントルートを通り、header_guest.phpデータを読み取る-->
-  <?php include VIEW_PATH . 'templates/header_guest.php'; ?>
+  <!--//定数、/var/www/html/../view/templates/header_logined.phpというドキュメントルートを通り、header_logined.phpデータを読み取る-->
+  <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
 
   <!--//定数、/var/www/html/../view/templates/messages.phpというドキュメントルートを通り、messages.phpデータを読み取る-->
   <?php include VIEW_PATH . 'templates/messages.php'; ?>
@@ -39,7 +39,7 @@ img{
           <div class="d-flex">
             <p class="my-auto"><?php print h($contents['name']); ?></p>
 
-            <?php if(is_person_user($user,$contents['user_id'])){ ?>
+            <?php if(is_person_user_contents($user,$contents['user_id']) || is_admin($user)){ ?>
             <div class="d-flex justify-content-between align-items-center col-md-4">
               <div class="btn-group">
                 <form method="post" action="contents_change_status.php" class="operation">

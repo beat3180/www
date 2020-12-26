@@ -13,32 +13,32 @@ require_once MODEL_PATH . 'category.php';
 //セッションの開始、作成
 session_start();
 
-//index_view.phpからPOSTで飛んできた特定の$tokenの情報を変数で出力
-$token = get_post('csrf');
+//(isset($_SESSION['user_id'])を取得しようとして、取得できなかった場合TRUEを返す
+if(is_logined() === false){
+  // header関数処理を実行し、top.phpページへリダイレクトする
+  redirect_to(TOP_URL);
+}
 
-//CSRF対策のトークンのチェック
-//if(is_valid_csrf_token($token) === false){
-  // header関数処理を実行し、login.phpページへリダイレクトする
-  //redirect_to(LOGOUT_URL);
-//}
-
-//DB接続
-$db = get_db_connect();
 
 //CSRFトークンの生成、セッションに登録する
 $token = get_csrf_token();
 
+//DB接続
+$db = get_db_connect();
+
 //$_SESSION['user_id']でDBusersテーブルから該当するuser_idを抽出し、情報を返す
 $user = get_login_user($db);
 
+//DBusersテーブル、typeカラムと一致しなかった場合
+if(is_admin($user) === false){
+  //login.phpにリダイレクト
+  redirect_to(HOME_URL);
+}
 
-//index_view.phpからGETで飛んできた特定のcontents_idの情報を変数で出力
-$contents_id = get_get('contents_id');
-
-//contents_idでDBcontentsテーブルの情報を取得、変数で出力する
-$contents = get_content($db,$contents_id);
+//DBcontentsテーブルの全ての情報を取得し、変数で出力する
+$contents = get_all_contents($db);
 
 
 
-//定数、/var/www/html/../view/contents_detail_view.phpというドキュメントルートを通り、contents_detail_viewデータを読み取る
-include_once VIEW_PATH . 'contents_detail_view.php';
+//定数、/var/www/html/../view/admin_contents_view.phpというドキュメントルートを通り、admin_contents_viewデータを読み取る
+include_once VIEW_PATH . 'admin_contents_view.php';

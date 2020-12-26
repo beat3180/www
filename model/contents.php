@@ -16,6 +16,7 @@ function get_content($db, $contents_id){
       contents.status,
       contents.category_id,
       contents.created_datetime,
+      contents.update_datetime,
       categorys.category,
       users.name,
       users.type
@@ -49,6 +50,7 @@ function get_user_contents($db, $user_id){
       contents.status,
       contents.category_id,
       contents.created_datetime,
+      contents.update_datetime,
       categorys.category,
       users.name,
       users.type
@@ -83,6 +85,7 @@ function get_contents($db,$is_open = false){
       contents.status,
       contents.category_id,
       contents.created_datetime,
+      contents.update_datetime,
       categorys.category,
       users.name,
       users.type

@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'top.css'); ?>">
 </head>
 <body  class="bg-light" >
-<!--//定数、/var/www/html/../view/templates/header_guest.phpというドキュメントルートを通り、header_guest.phpデータを読み取る-->
-<?php include VIEW_PATH . 'templates/header_guest.php'; ?>
+<!--//定数、/var/www/html/../view/templates/header_top.phpというドキュメントルートを通り、header_top.phpデータを読み取る-->
+<?php include VIEW_PATH . 'templates/header_top.php'; ?>
 
 
 

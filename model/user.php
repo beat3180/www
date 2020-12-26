@@ -102,8 +102,13 @@ function is_admin($user){
   return $user['type'] === USER_TYPE_ADMIN;
 }
 
-function is_person_user($user,$contents){
+function is_person_user_contents($user,$contents){
   return $user['user_id'] === $contents;
+}
+
+//DBテーブルusers、typeカラムを抽出して返す
+function is_person_user($user){
+  return $user['type'] === USER_TYPE_NORMAL;
 }
 
 //ユーザー名とパスワードのエラー処理を行い、結果を返す

@@ -9,8 +9,8 @@
 
 </head>
 <body  class="bg-light" >
-<!--//定数、/var/www/html/../view/templates/header_guest.phpというドキュメントルートを通り、header_guest.phpデータを読み取る-->
-<?php include VIEW_PATH . 'templates/header_guest.php'; ?>
+<!--//定数、/var/www/html/../view/templates/header_logined.phpというドキュメントルートを通り、header_logined.phpデータを読み取る-->
+<?php include VIEW_PATH . 'templates/header_logined.php'; ?>
 
 <!--//定数、/var/www/html/../view/templates/messages.phpというドキュメントルートを通り、messages.phpデータを読み取る-->
 <?php include VIEW_PATH . 'templates/messages.php'; ?>
@@ -18,6 +18,7 @@
   <?php if(count($contents) > 0){ ?>
   <div class="album py-5 bg-light">
     <div class="container">
+    <h1 class="mb-5">MY記事</h1>
       <div class="row">
       <?php foreach($contents as $content){ ?>
         <div class="col-md-4">

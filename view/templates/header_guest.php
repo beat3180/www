@@ -8,23 +8,10 @@
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav col-auto ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="<?php print(CREATE_URL);?>">管理</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?php print(USER_CONTENTS_URL);?>">MY記事</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?php print(POST_URL);?>">記事投稿</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="<?php print(LOGIN_URL);?>">ログイン</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php print(SIGNUP_URL);?>">サインアップ</a>
-        </li>
-        <li class="nav-item">
-          <!-- <a class="nav-link" href="#">Profile</a> -->
-          <a class="nav-link" href="logout.php">ログアウト</a>
         </li>
       </ul>
     </div>
