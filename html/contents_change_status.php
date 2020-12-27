@@ -60,9 +60,14 @@ if($changes_to === 'open'){
 
 $contents_detail_change_status = get_post('contents_detail_change_status');
 
+$admin_contents_change_status = get_post('admin_contents_change_status');
+
 if($contents_detail_change_status === "contents_detail_change_status"){
-  //このページが表示されないよう、admin.phpにリダイレクトする
+  //このページが表示されないよう、contents_datail.phpにリダイレクトする
   redirect_to('/contents_detail.php?contents_id=' . $contents_id);
+} else if($admin_contents_change_status === "admin_contents_change_status"){
+  //このページが表示されないよう、admin_contents.phpにリダイレクトする
+  redirect_to(ADMIN_CONTENTS_URL);
 } else {
   //このページが表示されないよう、user_contents.phpにリダイレクトする
   redirect_to(USER_CONTENTS_URL);

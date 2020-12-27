@@ -6,8 +6,8 @@
   <title>記事投稿</title>
 </head>
 <body>
-<!--//定数、/var/www/html/../view/templates/header_guest.phpというドキュメントルートを通り、header_guest.phpデータを読み取る-->
-<?php include VIEW_PATH . 'templates/header_guest.php'; ?>
+<!--//定数、/var/www/html/../view/templates/header_logined.phpというドキュメントルートを通り、header_logined.phpデータを読み取る-->
+<?php include VIEW_PATH . 'templates/header_logined.php'; ?>
 
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-5">
 <!--//定数、/var/www/html/../view/templates/messages.phpというドキュメントルートを通り、messages.phpデータを読み取る-->

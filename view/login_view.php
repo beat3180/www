@@ -4,8 +4,6 @@
 <!--//定数、/var/www/html/../view/templates/head.phpというドキュメントルートを通り、head.phpデータを読み取る-->
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   <title>ログイン</title>
-  <!--//定数、/assets/css/top.cssというドキュメントルートを通り、top.cssを読み込む-->
-  <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'top.css'); ?>">
 </head>
 <body  class="text-center" >
 <!--//定数、/var/www/html/../view/templates/header_guest.phpというドキュメントルートを通り、header_guest.phpデータを読み取る-->
@@ -33,6 +31,7 @@
   <!--CSRF対策のセッションに登録されたトークンを送信する-->
   <input type="hidden" name="csrf" value="<?php print($token); ?>">
 </form>
+<p>※管理ユーザー名とパスワードはユーザー名:adminbeat パスワード:adminbeatです</p>
 </div>
 </body>
 </html>

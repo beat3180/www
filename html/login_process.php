@@ -45,9 +45,9 @@ if( $user === false){
 
 
 set_message('ログインしました。');
-//管理者typeに一致した場合、admin.phpへリダイレクトする
+//管理者typeに一致した場合、admin_contents.phpへリダイレクトする
 if ($user['type'] === USER_TYPE_ADMIN){
-  redirect_to(CREATE_URL);
+  redirect_to(ADMIN_CONTENTS_URL);
 }
 //一般ユーザーとしてログインに成功した場合、index.phpにリダイレクトする
 redirect_to(HOME_URL);

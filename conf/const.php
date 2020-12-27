@@ -45,6 +45,10 @@ define('HISTORY_URL', '/history.php');
 define('POST_URL', '/post.php');
 //create.phpのドキュメントルート
 define('CREATE_URL', '/create.php');
+//admin_contents.phpのドキュメントルート
+define('ADMIN_CONTENTS_URL', '/admin_contents.php');
+//admin_comment.phpのドキュメントルート
+define('ADMIN_COMMENT_URL', '/admin_comment.php');
 //create.phpのドキュメントルート
 define('CONTENTS_DETAIL_URL', '/contents_detail.php?contents_id=' . print($contents_id) );
 //user_contents.phpのドキュメントルート
@@ -84,6 +88,11 @@ define('CATEGORY_NAME_LENGTH_MAX', 100);
 define('CONTENTS_LENGTH_MIN', 10);
 //コンテンツの長さが1500文字以下
 define('CONTENTS_LENGTH_MAX', 1500);
+//コメントの長さが1文字以上
+define('COMMENT_LENGTH_MIN', 1);
+//コンテンツの長さが1500文字以下
+define('COMMENT_LENGTH_MAX', 100);
+
 
 //DBcontentsテーブル、statusカラム1
 define('CONTENTS_STATUS_OPEN', 1);

@@ -5,8 +5,10 @@ require_once '../conf/const.php';
 require_once MODEL_PATH . 'functions.php';
 ///var/www/html/../model/user.phpというドキュメントルートを通りuserデータに関する関数ファイルを読み込み
 require_once MODEL_PATH . 'user.php';
-///var/www/html/../model/category.phpというドキュメントルートを通りcategoryデータに関する関数ファイルを読み込み
-require_once MODEL_PATH . 'category.php';
+///var/www/html/../model/comment.phpというドキュメントルートを通りcommentデータに関する関数ファイルを読み込み
+require_once MODEL_PATH . 'comment.php';
+///var/www/html/../model/contents.phpというドキュメントルートを通りcontentsデータに関する関数ファイルを読み込み
+require_once MODEL_PATH . 'contents.php';
 
 //セッションの開始、作成
 session_start();
@@ -32,26 +34,26 @@ $db = get_db_connect();
 //$_SESSION['user_id']でDBusersテーブルから該当するuser_idを抽出し、情報を返す
 $user = get_login_user($db);
 
-//DBusersテーブル、typeカラムと一致しなかった場合
-if(is_admin($user) === false){
-   //login.phpにリダイレクト
-  redirect_to(LOGOUT_URL);
-}
+$contents_id = get_post('contents_id');
 
-//category_view.phpからPOSTで飛んできた特定のcategory_idの情報を変数で出力
-$category_id = get_post('category_id');
+//view.phpからPOSTで飛んできた特定のcomment_idの情報を変数で出力
+$comment_id = get_post('comment_id');
 
-
-//DBcategorysテーブル、category_idで抽出したカラムを削除
-if(destroy_category($db, $category_id) === true){
+//DBcategorysテーブル、commnet_idで抽出したカラムを削除
+if(destroy_comment($db, $comment_id) === true){
    //$_SESSION['__messages'][]に商品を削除しました。というメッセージを格納する
-  set_message('カテゴリーを削除しました。');
+  set_message('コメントを削除しました。');
   //何らかの処理が失敗した場合
 } else {
   //$_SESSION['__errors'][]に商品削除に失敗しました。というメッセージを格納する
-  set_error('カテゴリー削除に失敗しました。');
+  set_error('コメント削除に失敗しました。');
 }
 
+$admin_comment_delete = get_post('admin_comment_delete');
 
-//このページが表示されないよう、create.phpにリダイレクトする
-redirect_to(CREATE_URL);
+if($admin_comment_delete === "admin_comment_delete"){
+  redirect_to(ADMIN_COMMENT_URL);
+} else {
+  //このページが表示されないよう、create.phpにリダイレクトする
+  redirect_to('/contents_detail.php?contents_id=' . $contents_id);
+}

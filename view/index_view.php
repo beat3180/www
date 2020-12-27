@@ -15,15 +15,18 @@ a.link_border {
 
 </style>
 <body  class="bg-light" >
-<!--//定数、/var/www/html/../view/templates/header_guest.phpというドキュメントルートを通り、header_guest.phpデータを読み取る-->
-<?php include VIEW_PATH . 'templates/header_guest.php'; ?>
+<!--//定数、/var/www/html/../view/templates/header_logined.phpというドキュメントルートを通り、header_logined.phpデータを読み取る-->
+<?php include VIEW_PATH . 'templates/header_logined.php'; ?>
 
 <!--//定数、/var/www/html/../view/templates/messages.phpというドキュメントルートを通り、messages.phpデータを読み取る-->
 <?php include VIEW_PATH . 'templates/messages.php'; ?>
-  <!--$categorysに一つ以上値が入っていた場合は表示される-->
+
+
+  <!--$contentsに一つ以上値が入っていた場合は表示される-->
   <?php if(count($contents) > 0){ ?>
   <div class="album py-5 bg-light">
     <div class="container">
+    <h1 class="mb-5">記事一覧</h1>
       <div class="row">
       <?php foreach($contents as $content){ ?>
         <div class="col-md-4">
@@ -56,6 +59,7 @@ a.link_border {
                       <input type="hidden" name="changes_to" value="open">
                     <?php } ?>
                     <input type="hidden" name="contents_id" value="<?php print($content['contents_id']); ?>">
+                    <input type="hidden" name="admin_contents_change_status" value="admin_contents_change_status">
                     <!--CSRF対策のセッションに登録されたトークンを送信する-->
                     <input type="hidden" name="csrf" value="<?php print($token); ?>">
                   </form>
