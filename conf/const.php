@@ -18,7 +18,7 @@ if ($_SERVER['SERVER_ADDR']==='160.251.11.253'){
   //Mysqlのホスト名
   define('DB_HOST', 'localhost');
   //Mysqlのデータベース名
-  define('DB_NAME', 'ec_site');
+  define('DB_NAME', 'manga');
   //Mysqlのユーザー名
   define('DB_USER', 'root');
   //Mysqlのパスワード
