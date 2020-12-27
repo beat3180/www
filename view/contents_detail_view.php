@@ -79,10 +79,47 @@ img{
 
 
 
-  <div class=" container py-4 text-center">
-    <h1 class="font-weight-normal py-4" style="border-bottom: 5px solid;"><?php print h($contents['title']); ?></h1>
-    <h5 class="text-left py-3 pb-5 mb-5" style="border-bottom: 3px solid; white-space:pre-wrap;"><?php print h($contents['contents']); ?></h5>
+  <div class=" container py-4">
+    <div class="text-center">
+      <h1 class="font-weight-normal py-4" style="border-bottom: 5px solid;"><?php print h($contents['title']); ?></h1>
+      <h4 class="text-left py-3 pb-5 mb-5" style="border-bottom: 3px solid; white-space:pre-wrap;"><?php print h($contents['contents']); ?></h4>
+    </div>
+    <h5 class="">コメント</h5>
+    <div class="list-group">
+      <?php foreach($comments as $comment){ ?>
+      <div class="list-group-item" aria-current="true">
+        <div class="d-flex w-100 justify-content-between">
+          <p class="mb-1"><?php print h(($comment['name'])); ?></p>
+          <small><?php print h(($comment['create_datetime'])); ?></small>
+        </div>
+        <h6 class="my-4 ml-4" style="white-space:pre-wrap;"><?php print h(($comment['comment'])); ?></h6>
+        <?php if(is_person_user_comment($user,$comment['user_id']) || is_admin($user)){ ?>
+        <form method="post" action="comment_delete.php">
+          <input type="submit" value="削除" class="btn btn-sm btn-danger delete">
+          <input type="hidden" name="comment_id" value="<?php print($comment['comment_id']); ?>">
+          <input type="hidden" name="contents_id" value="<?php print($contents['contents_id']); ?>">
+          <!--CSRF対策のセッションに登録されたトークンを送信する-->
+          <input type="hidden" name="csrf" value="<?php print($token); ?>">
+        </form>
+        <?php } ?>
+      </div>
+      <?php } ?>
+
+      <form method="post" action="comment_insert.php">
+        <div class="mt-5">
+          <label for="comment" class="form-label">コメント投稿</label>
+          <textarea name="comment" rows="5" id="comment" class="form-control"></textarea>
+        </div>
+        <input type="hidden" name="contents_id" value="<?php print($contents['contents_id']); ?>">
+        <!--CSRF対策のセッションに登録されたトークンを送信する-->
+        <input type="hidden" name="csrf" value="<?php print($token); ?>">
+        <button type="submit" class="btn btn-primary my-3">コメントを投稿する</button>
+      </form>
+    </div>
+
   </div>
+
+
   <!--jQuery、$('.delete')で要素を特定、confirmでダイアログを開く-->
   <script>
     $('.delete').on('click', () => confirm('本当に削除しますか？'))

@@ -31,8 +31,6 @@ function get_category($db, $category_id){
 }
 
 
-
-
 function regist_category($db, $category){
   //エラー関数処理の結果falseが返ってきた場合
   if(validate_category($category) === false){

@@ -65,11 +65,12 @@ img{
               <form method="post" action="contents_delete.php">
                 <input type="submit" value="削除" class="btn btn-sm btn-danger delete">
                 <input type="hidden" name="contents_id" value="<?php print($content['contents_id']); ?>">
+                <input type="hidden" name="admin_contents_delete" value="admin_contents_delete">
                 <!--CSRF対策のセッションに登録されたトークンを送信する-->
                 <input type="hidden" name="csrf" value="<?php print($token); ?>">
               </form>
 
-              <form method="get"  action="contents_detail.php?contents_id=<?php print($content['contents_id']); ?>">
+              <form method="get"  action="contents_detail.php">
                <input type="submit" value="記事詳細へ" class="btn btn-sm btn-primary">
                <input type="hidden" name="contents_id" value="<?php print($content['contents_id']); ?>">
               </form>

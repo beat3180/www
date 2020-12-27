@@ -106,6 +106,10 @@ function is_person_user_contents($user,$contents){
   return $user['user_id'] === $contents;
 }
 
+function is_person_user_comment($user,$comment){
+  return $user['user_id'] === $comment;
+}
+
 //DBテーブルusers、typeカラムを抽出して返す
 function is_person_user($user){
   return $user['type'] === USER_TYPE_NORMAL;

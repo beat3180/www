@@ -212,27 +212,37 @@ function update_item_stock($db, $item_id, $stock){
 //DBcontentsテーブル、contents_idで抽出した該当のカラムを抽出し、デリートする
 function destroy_contents($db, $contents_id){
 //特定のcontents_idでDBから情報を抽出する
-  $contents = get_content($db, $contents_id);
+  $contents = get_contents_comments($db, $contents_id);
   //contents情報を抽出できなかった場合、falseを返す
   if($contents === false){
     return false;
   }
-  //トランザクションを開始する
-  $db->beginTransaction();
+//トランザクションを開始する
+$db->beginTransaction();
+try{
 //抽出したcontents_idによってcontentsを削除し、画像も削除する
-  if(delete_contents($db, $contents['contents_id'])){
+  foreach($contents as $content){
+    delete_contents($db, $content['contents_id']);
     if($content['image'] !== null){
-      delete_image($contents['image']);
+      delete_image($content['image']);
     }
+  }
+  foreach($contents as $content){
+    delete_comment($db, $content['comment_id']);
+  }
       //結果をコミットする
     $db->commit();
     //trueを返す
     return true;
-  }
+} catch (PDOException $e) {
+
   //処理が失敗した場合ロールバックする
   $db->rollback();
+throw $e;
+}
   return false;
 }
+
 
 //DBitemsテーブルから特定のitem_idで抽出したカラムをデリートするSQL文
 function delete_contents($db, $contents_id){
@@ -315,4 +325,43 @@ function is_valid_contents($contents){
   }
   //trueかfalse、if文で分岐させたいずれかの値を返す
   return $is_valid;
+}
+
+
+function get_contents_comment($db,$contents_id){
+$sql = '
+  SELECT
+      contents.contents_id,
+      contents.title,
+      contents.contents,
+      contents.user_id,
+      contents.image,
+      contents.status,
+      contents.category_id,
+      contents.created_datetime,
+      contents.update_datetime,
+      categorys.category,
+      users.name,
+      users.type,
+      comments.comment_id
+    FROM
+      contents
+    JOIN
+      categorys
+    ON
+      contents.category_id = categorys.category_id
+    JOIN
+     users
+    ON
+      contents.user_id = users.user_id
+    JOIN
+      comments
+    ON
+      contents.contents_id = comments.contents_id
+    WHERE
+      contents.contents_id = ?
+';
+//キーを連番に、値をカラム毎の配列で取得する。
+  return fetch_all_query($db, $sql,[$contents_id]);
+
 }

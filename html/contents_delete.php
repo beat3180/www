@@ -9,6 +9,8 @@ require_once MODEL_PATH . 'user.php';
 require_once MODEL_PATH . 'contents.php';
 ///var/www/html/../model/category.phpというドキュメントルートを通りcategoryデータに関する関数ファイルを読み込み
 require_once MODEL_PATH . 'category.php';
+///var/www/html/../model/comment.phpというドキュメントルートを通りcommentデータに関する関数ファイルを読み込み
+require_once MODEL_PATH . 'comment.php';
 
 //セッションの開始、作成
 session_start();
@@ -49,6 +51,11 @@ if(destroy_contents($db, $contents_id) === true){
   set_error('記事削除に失敗しました。');
 }
 
+$admin_contents_delete = get_post('admin_contents_delete');
 
-//このページが表示されないよう、user_contents.phpにリダイレクトする
-redirect_to(USER_CONTENTS_URL);
+if($admin_contents_delete === "admin_contents_delete"){
+  redirect_to(ADMIN_CONTENTS_URL);
+} else {
+  //このページが表示されないよう、user_contents.phpにリダイレクトする
+  redirect_to(USER_CONTENTS_URL);
+}

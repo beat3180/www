@@ -13,6 +13,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="<?php print(ADMIN_CONTENTS_URL);?>">記事一覧・管理</a>
               <a class="dropdown-item" href="<?php print(CREATE_URL);?>">カテゴリー追加・管理</a>
+              <a class="dropdown-item" href="<?php print(ADMIN_COMMENT_URL);?>">コメント一覧・管理</a>
             </div>
           </li>
           <li class="nav-item">
@@ -27,7 +28,7 @@
           </li>
         </ul>
       </div>
-      <p style="color: white;">ユーザー名:<?php print($user['name']); ?></p>
+      <p style="color: white;">ユーザー名:<?php print h(($user['name'])); ?></p>
     </nav>
   </header>
 
@@ -53,7 +54,7 @@
           </li>
         </ul>
       </div>
-      <p style="color: white;">ユーザー名:<?php print($user['name']); ?></p>
+      <p style="color: white;">ユーザー名:<?php print h(($user['name'])); ?></p>
     </nav>
   </header>
 <?php } else { ?>

@@ -31,7 +31,7 @@
   <!--CSRF対策のセッションに登録されたトークンを送信する-->
   <input type="hidden" name="csrf" value="<?php print($token); ?>">
 </form>
-<p>※管理ユーザー名とパスワードはユーザー名:adminbeat パスワード:adminbeatです
+<p>※管理ユーザー名とパスワードはユーザー名:adminbeat パスワード:adminbeatです</p>
 </div>
 </body>
 </html>
